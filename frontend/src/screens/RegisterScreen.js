@@ -31,7 +31,7 @@ function RegisterScreen({ location, history }) {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
             dispatch(register(name, email, password))
@@ -41,18 +41,18 @@ function RegisterScreen({ location, history }) {
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Adresse client</h1>
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
 
                 <Form.Group controlId='name'>
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Prénom / Nom de la société</Form.Label>
                     <Form.Control
                         required
                         type='name'
-                        placeholder='Enter name'
+                        placeholder='nom'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     >
@@ -60,11 +60,11 @@ function RegisterScreen({ location, history }) {
                 </Form.Group>
 
                 <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
+                    <Form.Label>Téléphone mobile</Form.Label>
                     <Form.Control
                         required
-                        type='email'
-                        placeholder='Enter Email'
+                        type='name'
+                        placeholder='Téléphone mobile'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     >
@@ -95,8 +95,8 @@ function RegisterScreen({ location, history }) {
                     </Form.Control>
                 </Form.Group>
 
-                <Button type='submit' variant='primary'>
-                    Register
+                <Button type='submit'  class="btn  btn-danger" variant='primary'>
+                    ENREGISTRER
                 </Button>
 
             </Form>
@@ -105,7 +105,7 @@ function RegisterScreen({ location, history }) {
                 <Col>
                     Have an Account? <Link
                         to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-                        Sign In
+                         CONNECTER
                         </Link>
                 </Col>
             </Row>

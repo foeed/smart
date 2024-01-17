@@ -31,16 +31,16 @@ function LoginScreen({ location, history }) {
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Adresse client</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
 
                 <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
+                    <Form.Label>Téléphone mobile</Form.Label>
                     <Form.Control
-                        type='email'
-                        placeholder='Enter Email'
+                        type='name'
+                        placeholder='Enter Téléphone mobile'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     >
@@ -60,15 +60,15 @@ function LoginScreen({ location, history }) {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Sign In
+                    CONNECTER
                 </Button>
             </Form>
 
             <Row className='py-3'>
                 <Col>
-                    New Customer? <Link
+                 nouvelle client? <Link
                         to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                        Register
+                        ENREGISTRER
                         </Link>
                 </Col>
             </Row>

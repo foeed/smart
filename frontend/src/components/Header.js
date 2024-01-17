@@ -1,78 +1,86 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Navbar, Nav, Container, Row, NavDropdown } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
-import SearchBox from './SearchBox'
-import { logout } from '../actions/userActions'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Navbar, Nav, Container, Badge, NavDropdown } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faUser, faBars } from '@fortawesome/free-solid-svg-icons';
+import { LinkContainer } from 'react-router-bootstrap';
+import SearchBox from './SearchBox';
+import { logout } from '../actions/userActions';
 
-function Header() {
+const Header = () => {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-    const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
+  // Assuming you have a 'cart' property in your Redux store state
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
-    const dispatch = useDispatch()
+  // Calculate the total number of items in the cart
+  const cartItemsCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
-    const logoutHandler = () => {
-        dispatch(logout())
-    }
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
 
-    return (
-        <header>
-            <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-                <Container>
-                    <LinkContainer to='/'>
-                        <Navbar.Brand>ProShop</Navbar.Brand>
-                    </LinkContainer>
+  return (
+    <header>
+      <Navbar bg="light" expand="lg" className="border-bottom">
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>
+              <img
+                src="/images/logo.png" // Replace with the actual path to your logo image
+               
+                height="70"
+                className="d-inline-block align-top"
+              />
+            </Navbar.Brand>
+          </LinkContainer>
 
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <SearchBox />
-                        <Nav className="ml-auto">
+          <Navbar.Toggle aria-controls="basic-navbar-nav">
+            <FontAwesomeIcon icon={faBars} />
+          </Navbar.Toggle>
 
-                            <LinkContainer to='/cart'>
-                                <Nav.Link ><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>
-                            </LinkContainer>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <SearchBox />
 
-                            {userInfo ? (
-                                <NavDropdown title={userInfo.name} id='username'>
-                                    <LinkContainer to='/profile'>
-                                        <NavDropdown.Item>Profile</NavDropdown.Item>
-                                    </LinkContainer>
+            <Nav className="ml-auto">
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  <FontAwesomeIcon icon={faShoppingCart} className="mr-1" />
+                  panier{' '}
+                  {cartItemsCount > 0 && (
+                    <Badge variant="danger" className="ml-1">
+                      {cartItemsCount}
+                    </Badge>
+                  )}
+                </Nav.Link>
+              </LinkContainer>
 
-                                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>DECONNEXION</NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <FontAwesomeIcon icon={faUser} className="mr-1" />
+                    CONNECTER
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <span></span>  <span></span>  <span></span>
+          <span></span>  <span></span>  <span></span>          <span></span>  <span></span>  <span></span>
+          <span></span>  <span></span>  <span></span>
+    </header>
+  );
+};
 
-                                </NavDropdown>
-                            ) : (
-                                    <LinkContainer to='/login'>
-                                        <Nav.Link><i className="fas fa-user"></i>Login</Nav.Link>
-                                    </LinkContainer>
-                                )}
-
-
-                            {userInfo && userInfo.isAdmin && (
-                                <NavDropdown title='Admin' id='adminmenue'>
-                                    <LinkContainer to='/admin/userlist'>
-                                        <NavDropdown.Item>Users</NavDropdown.Item>
-                                    </LinkContainer>
-
-                                    <LinkContainer to='/admin/productlist'>
-                                        <NavDropdown.Item>Products</NavDropdown.Item>
-                                    </LinkContainer>
-
-                                    <LinkContainer to='/admin/orderlist'>
-                                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                                    </LinkContainer>
-
-                                </NavDropdown>
-                            )}
-
-
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </header>
-    )
-}
-
-export default Header
+export default Header;

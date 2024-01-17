@@ -57,20 +57,21 @@ def getProduct(request, pk):
 @permission_classes([IsAdminUser])
 def createProduct(request):
     user = request.user
+    data = request.data
 
     product = Product.objects.create(
         user=user,
-        name='Sample Name',
-        price=0,
-        brand='Sample Brand',
-        countInStock=0,
-        category='Sample Category',
-        description=''
+        name=data.get('name', 'Sample Name'),
+        price=data.get('price', 0),
+        brand=data.get('brand', 'Sample Brand'),
+        countInStock=data.get('countInStock', 0),
+        category=data.get('category', 'Sample Category'),
+        description=data.get('description', ''),
+        type=data.get('type', 'Sample Type')  # Add 'type' field
     )
 
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
-
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
@@ -78,12 +79,13 @@ def updateProduct(request, pk):
     data = request.data
     product = Product.objects.get(_id=pk)
 
-    product.name = data['name']
-    product.price = data['price']
-    product.brand = data['brand']
-    product.countInStock = data['countInStock']
-    product.category = data['category']
-    product.description = data['description']
+    product.name = data.get('name', product.name)
+    product.price = data.get('price', product.price)
+    product.brand = data.get('brand', product.brand)
+    product.countInStock = data.get('countInStock', product.countInStock)
+    product.category = data.get('category', product.category)
+    product.description = data.get('description', '')
+    product.type = data.get('type', 'Sample Type')  # Add 'type' field
 
     product.save()
 

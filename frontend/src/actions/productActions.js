@@ -52,6 +52,33 @@ export const listProducts = (keyword = '') => async (dispatch) => {
         })
     }
 }
+// ... Other imports and action types ...
+
+export const listProductsByType = (type) => async (dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_LIST_REQUEST });
+
+        const { data } = await axios.get(`/api/products?type=${type}`);
+        console.log('Fetched products data:', data);
+
+        dispatch({
+            type: PRODUCT_LIST_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const errorMessage =
+            error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message;
+
+        console.error('Error fetching products:', errorMessage);
+
+        dispatch({
+            type: PRODUCT_LIST_FAIL,
+            payload: errorMessage,
+        });
+    }
+};
 
 export const listTopProducts = () => async (dispatch) => {
     try {

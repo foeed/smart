@@ -26,7 +26,7 @@ SECRET_KEY = 'sc%oco$+(3$z$at=z4j)#l-+ym)+_b11389mdt2^12m$bf63%@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-demo.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'shop-demo.herokuapp.com']
 
 
 # Application definition
@@ -199,7 +199,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 #AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 #AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-#AWS_STORAGE_BUCKET_NAME = 'proshop-bucket-demo'
+#AWS_STORAGE_BUCKET_NAME = 'shop-bucket-demo'
 
 
 if os.getcwd() == '/app':

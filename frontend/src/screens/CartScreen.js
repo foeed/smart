@@ -5,6 +5,15 @@ import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
+
+
+
+
+
+  
+
+
+
 function CartScreen({ match, location, history }) {
     const productId = match.params.id
     const qty = location.search ? Number(location.search.split('=')[1]) : 1
@@ -27,14 +36,18 @@ function CartScreen({ match, location, history }) {
     const checkoutHandler = () => {
         history.push('/login?redirect=shipping')
     }
-
+    const checkoutHandlerX = () => {
+        history.push('/redirect=shipping')
+    }
     return (
         <Row>
+          <span></span>  <span></span>  <span></span>
+          <span></span>  <span></span>  <span></span>
             <Col md={8}>
-                <h1>Shopping Cart</h1>
+                <h1>Panier</h1>
                 {cartItems.length === 0 ? (
                     <Message variant='info'>
-                        Your cart is empty <Link to='/'>Go Back</Link>
+                    Votre panier est vide.  <Link to='/'>Retourner à la boutique</Link>
                     </Message>
                 ) : (
                         <ListGroup variant='flush'>
@@ -49,7 +62,7 @@ function CartScreen({ match, location, history }) {
                                         </Col>
 
                                         <Col md={2}>
-                                            ${item.price}
+                                            {item.price}DT
                                         </Col>
 
                                         <Col md={3}>
@@ -90,19 +103,20 @@ function CartScreen({ match, location, history }) {
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2>
-                            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                            <h2>RÉSUMÉ DU PANIER</h2>
+                            <h4>Sous-total</h4>
+                            {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}DT
                         </ListGroup.Item>
                     </ListGroup>
 
                     <ListGroup.Item>
                         <Button
                             type='button'
-                            className='btn-block'
+                            className='btn-danger'
                             disabled={cartItems.length === 0}
                             onClick={checkoutHandler}
                         >
-                            Proceed To Checkout
+                            COMMANDER 
                         </Button>
                     </ListGroup.Item>
 
